@@ -6,6 +6,7 @@ body {
     background-color: #1e1e2f;
     color: #ffffff;
     line-height: 1.6;
+
 }
 
 a {
@@ -16,6 +17,8 @@ a {
 
 a:hover {
     color: #ffffff; /* Blanco al hacer hover */
+
+    
 }
 
 /* Estilos del header */
@@ -28,21 +31,30 @@ header {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
+header .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar el contenido del header */
+    text-align: center;
+}
+
 header h1 {
     margin: 0;
     font-size: 2.5em;
     color: #ff4757; /* Rojo cyberpunk */
+    margin-bottom: 10px; /* Espacio entre el nombre y el menú */
 }
 
 nav ul {
     list-style: none;
     padding: 0;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center; /* Centrar el menú */
+    margin: 0;
 }
 
 nav ul li {
-    margin-left: 20px;
+    margin: 0 15px; /* Espacio entre elementos del menú */
 }
 
 nav ul li a {
@@ -55,12 +67,11 @@ nav ul li a {
 nav ul li a:hover {
     color: #ff4757; /* Rojo cyberpunk */
 }
-
 /* Estilos de las secciones */
 section {
     padding: 100px 0;
     background: linear-gradient(145deg, #2d2d44, #1e1e2f);
-    margin: 20px 0;
+    margin: 40px 0; /* Más margen entre secciones */
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
@@ -70,12 +81,20 @@ section h2 {
     margin-bottom: 20px;
     color: #ff4757; /* Rojo cyberpunk */
     text-shadow: 2px 2px 5px rgba(255, 71, 87, 0.3);
+    text-align: center; /* Centrar el título */
+}
+
+section p {
+    color: #e0e0e0; /* Gris claro para mejor contraste */
+    font-size: 1.1em;
+    line-height: 1.8;
+    margin: 20px 0; /* Márgenes en los párrafos */
 }
 
 /* Estilos del portafolio */
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 20px;
 }
 
@@ -85,16 +104,47 @@ section h2 {
     border-radius: 10px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .portfolio-item:hover {
     transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3);
+    box-shadow: 0 10px 20px rgba(255, 18, 37, 0.3);
 }
 
-.portfolio-item img {
-    max-width: 100%;
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 200px; /* Altura fija para el contenedor */
+    overflow: hidden;
     border-radius: 10px;
+}
+
+.portfolio-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ajusta la imagen para que se vea completa */
+    transition: opacity 0.3s ease;
+}
+
+.portfolio-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-image {
+    opacity: 0;
+}
+
+.portfolio-item:hover .portfolio-video {
+    opacity: 1;
 }
 
 .portfolio-item h3 {
@@ -103,12 +153,18 @@ section h2 {
     color: #ff4757; /* Rojo cyberpunk */
 }
 
+.portfolio-item p {
+    color: #e0e0e0; /* Gris claro para mejor contraste */
+    font-size: 1em;
+    margin-top: 10px;
+}
+
 /* Estilos del footer */
 footer {
     background-color: #2d2d44;
-    padding: 20px 0;
+    padding: 40px 0; /* Más espacio en el footer */
     text-align: center;
-    margin-top: 60px;
+    margin-top: 60px; /* Más espacio arriba del footer */
 }
 
 footer p {
@@ -135,61 +191,3 @@ body {
     z-index: 1;
 }
 
-/* Mejoras en la legibilidad */
-section p {
-    color: #e0e0e0; /* Gris claro para mejor contraste */
-    font-size: 1.1em;
-    line-height: 1.8;
-}
-
-.portfolio-item p {
-    color: #e0e0e0; /* Gris claro para mejor contraste */
-    font-size: 1em;
-    margin-top: 10px;
-}
-
-footer a {
-    color: #ff4757; /* Rojo cyberpunk */
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: #ffffff; /* Blanco al hacer hover */
-}
-
-/* Colores para los títulos */
-header h1 {
-    color: #ffffff; /* Blanco para tu nombre */
-    font-size: 2.5em;
-    text-shadow: 2px 2px 5px rgba(255, 71, 87, 0.5); /* Sombra roja */
-}
-
-section h2 {
-    color: #00ffcc; /* Verde azulado cyberpunk */
-    font-size: 2.5em;
-    text-shadow: 2px 2px 5px rgba(0, 255, 204, 0.3); /* Sombra verde azulada */
-}
-
-.portfolio-item h3 {
-    color: #ff4757; /* Rojo cyberpunk para títulos de proyectos */
-    font-size: 1.5em;
-}
-
-/* Centrar el header */
-header .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-header h1 {
-    margin-bottom: 10px; /* Espacio entre tu nombre y el menú */
-}
-
-nav ul {
-    justify-content: center; /* Centrar el menú */
-    margin: 0;
-    padding: 0;
-}
