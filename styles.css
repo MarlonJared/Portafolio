@@ -5,23 +5,33 @@ body {
     padding: 0;
     background-color: #1e1e2f;
     color: #ffffff;
+    line-height: 1.6;
 }
 
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
+a {
+    color: #ff4757; /* Rojo cyberpunk para enlaces */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #ffffff; /* Blanco al hacer hover */
 }
 
 /* Estilos del header */
 header {
     background-color: #2d2d44;
     padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 header h1 {
     margin: 0;
     font-size: 2.5em;
+    color: #ff4757; /* Rojo cyberpunk */
 }
 
 nav ul {
@@ -39,16 +49,27 @@ nav ul li a {
     color: #ffffff;
     text-decoration: none;
     font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ff4757; /* Rojo cyberpunk */
 }
 
 /* Estilos de las secciones */
 section {
-    padding: 60px 0;
+    padding: 100px 0;
+    background: linear-gradient(145deg, #2d2d44, #1e1e2f);
+    margin: 20px 0;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 section h2 {
-    font-size: 2em;
+    font-size: 2.5em;
     margin-bottom: 20px;
+    color: #ff4757; /* Rojo cyberpunk */
+    text-shadow: 2px 2px 5px rgba(255, 71, 87, 0.3);
 }
 
 /* Estilos del portafolio */
@@ -63,6 +84,12 @@ section h2 {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3);
 }
 
 .portfolio-item img {
@@ -73,6 +100,7 @@ section h2 {
 .portfolio-item h3 {
     margin-top: 10px;
     font-size: 1.5em;
+    color: #ff4757; /* Rojo cyberpunk */
 }
 
 /* Estilos del footer */
@@ -80,8 +108,88 @@ footer {
     background-color: #2d2d44;
     padding: 20px 0;
     text-align: center;
+    margin-top: 60px;
 }
 
 footer p {
     margin: 0;
+    color: #ff4757; /* Rojo cyberpunk */
+}
+
+/* Fondo con overlay oscuro */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(30, 30, 47, 0.8); /* Overlay oscuro */
+    z-index: -1;
+}
+
+body {
+    background: url('assets/images/cyberpunk-bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    z-index: 1;
+}
+
+/* Mejoras en la legibilidad */
+section p {
+    color: #e0e0e0; /* Gris claro para mejor contraste */
+    font-size: 1.1em;
+    line-height: 1.8;
+}
+
+.portfolio-item p {
+    color: #e0e0e0; /* Gris claro para mejor contraste */
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+footer a {
+    color: #ff4757; /* Rojo cyberpunk */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #ffffff; /* Blanco al hacer hover */
+}
+
+/* Colores para los títulos */
+header h1 {
+    color: #ffffff; /* Blanco para tu nombre */
+    font-size: 2.5em;
+    text-shadow: 2px 2px 5px rgba(255, 71, 87, 0.5); /* Sombra roja */
+}
+
+section h2 {
+    color: #00ffcc; /* Verde azulado cyberpunk */
+    font-size: 2.5em;
+    text-shadow: 2px 2px 5px rgba(0, 255, 204, 0.3); /* Sombra verde azulada */
+}
+
+.portfolio-item h3 {
+    color: #ff4757; /* Rojo cyberpunk para títulos de proyectos */
+    font-size: 1.5em;
+}
+
+/* Centrar el header */
+header .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 10px; /* Espacio entre tu nombre y el menú */
+}
+
+nav ul {
+    justify-content: center; /* Centrar el menú */
+    margin: 0;
+    padding: 0;
 }
