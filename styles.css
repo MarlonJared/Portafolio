@@ -126,15 +126,21 @@ ion-icon{ --ionicon-stroke-width: 20px;}
     color: var(--color-white-70);
 }
 
-.btn-primary{
-    padding: 8px 30px;
+.btn-primary {
+    flex: 1 1 calc(50% - 15px); /* Ocupa el 50% del ancho menos el gap */
+    padding: 10px 30px;
     border: 2px solid var(--background-orange);
     font-size: var(--font-size-14);
     transition: var(--transition-default);
     border-radius: 5px;
     box-shadow: 5px 5px 0px #000000;
-
-
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-left:    0.5%;
+    margin-right:   0.5%;
+    margin-top:     5px;
+    margin-bottom:  5px;
 }
 
 .btn-primary:hover{
@@ -330,7 +336,7 @@ img{
 .circle {
     position: absolute;
     border-radius: 50%;
-    border: 2px solid #4ad2ff; /* Borde blanco */
+    border: 2px solid #ff4a4a; /* Borde blanco */
     animation: rotate 4s linear infinite;
     top: 50%;
     left: 50%;
@@ -366,7 +372,7 @@ img{
     border-bottom-color: transparent; /* Primer corte */
     border-top-color: transparent; /* Segundo corte */
     animation-duration: 7s; /* Velocidad más lenta */
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 /* Animación de rotación infinita */
@@ -627,7 +633,7 @@ img{
     
     
 
-    margin-bottom: 50%;}
+    margin-bottom: 100px;}
 
 
 
@@ -768,6 +774,232 @@ img{
 
 /*PORTFOLIO SECTION*/
 
+/* Filtros */
+.buttons {
+    margin: 20px;
+    text-align: center;    
+    display: flex; /* Para que los botones ocupen todo el espacio */
+    flex-wrap: wrap; /* Se ajustan si hay poco espacio */
+    gap: 1px; /* Espacio entre los botones */
+
+}
+
+.filter-buttons button {
+    flex: 1; /* Cada botón ocupa el mismo ancho */
+    padding: 15px; /* Tamaño uniforme */
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    background-color: #444444;
+    border: none;
+    border-radius: 0;
+    transition: background-color 0.2s, color 0.2s;
+    min-width: 320px; /* Evita que sean muy pequeños en pantallas pequeñas */
+}
+
+.filter-buttons button:hover {
+    color: white;
+    background-color: #555555;
+    border: 0.1px solid rgba(255, 255, 255, 0.5);
+   
+
+
+
+}
+
+.filter-buttons button.active {
+    background-color: #626262;
+    color: rgb(255, 255, 255);
+    border: -1px solid rgb(255, 255, 255);
+    box-shadow: 0px 0px 0px 2px ;
+
+    z-index: 10;
+}
+
+
+/* Galería */
+.gallery_portafolio {
+    columns: 3 320px;
+    column-gap: 0.5em;
+    padding: 10px;
+}
+
+.img_gallery, .video_gallery, .lusido {
+    max-width: 100%;
+    margin-bottom: 0.5em;
+    outline: 0.5px solid #f2fcff;
+    outline-offset: 0px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    filter: grayscale(100%) brightness(1);
+    position: relative;
+    z-index: 1;
+}
+
+.img_gallery:hover, .video_gallery:hover , .lusido:hover{
+    transform: scale(1.1);
+    filter: grayscale(0%) brightness(1);
+    z-index: 10;
+    box-shadow: 0px 10px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.img_gallery:not(:hover), .video_gallery:not(:hover) {
+    filter: grayscale(100%) brightness(0.5);
+}
+
+/* Lightbox */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-img, .lightbox-video {
+    max-width: 90%;
+    max-height: 80%;
+    object-fit: contain;
+}
+
+.lightbox-video {
+    display: none; /* Ocultar video por defecto */
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+}
+
+.download-btn {
+    position: absolute;
+    bottom: 0;
+    background-color: #43434389;
+    color: white;
+    padding: 20px 40px;
+    border: 2px solid #f5f5f5;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition:  0.3s;
+}
+
+.download-btn:hover {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 20px 100%;
+}
+
+/* Inicio PARTE DE SLIDER */
+.before-after {
+    position: relative;
+    width:auto;
+    max-width: 900px;
+    min-height: 320px; /* Establece una altura mínima del 50% del viewport */
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; /* Sombra suave alrededor del contenedor */
+}
+
+
+.before-after .img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra todo el espacio sin distorsionarse */
+}
+
+.before-after .img.front-img {
+    z-index: 1;
+    /* Recorta la mitad frontal de la imagen */
+    clip-path: polygon(0 0, 50% 0, 50% 100%, 0% 100%);
+}
+
+/* Estilos para el control deslizante (slider) */
+.slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 2;
+    margin: 0;
+    opacity: 0; /* Hace el slider transparente */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el slider */
+}
+/* Permitir que los eventos pasen a través del slider y la línea vertical */
+
+
+/* Estilos específicos para el thumb en navegadores WebKit (Chrome, Safari) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Elimina el estilo por defecto */
+    width: 15px; /* Ancho del thumb */
+    height: 100%; /* Altura del thumb (ocupa toda la altura del contenedor) */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el thumb */
+    background-color: white; /* Color de fondo del thumb */
+    border: 2px solid #c2c2c2; /* Borde del thumb */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+}
+
+/* Estilos específicos para el thumb en Firefox */
+.slider::-moz-range-thumb {
+    -moz-appearance: none; /* Elimina el estilo por defecto */
+    width: 15px; /* Ancho del thumb */
+    height: 100%; /* Altura del thumb (ocupa toda la altura del contenedor) */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el thumb */
+    background-color: white; /* Color de fondo del thumb */
+    border: 2px solid #c2c2c2; /* Borde del thumb */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+}
+
+/* Estilos para el track en navegadores WebKit (Chrome, Safari) */
+.slider::-webkit-slider-runnable-track {
+    background: transparent; /* Fondo transparente */
+}
+
+/* Estilos para el track en Firefox */
+.slider::-moz-range-track {
+    background: transparent; /* Fondo transparente */
+}
+
+/* Línea vertical personalizada */
+.slider-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background-color: white;
+    z-index: 3;
+    pointer-events: none;
+    transform: translateX(-50%);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}/*hasta aca la galeria*/  
+
+.filter-buttons{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 40px 0;
+    background-color: #000000;
+}
+
+
 .filter-box{
     display: flex;
     justify-content: flex-end;
@@ -845,7 +1077,6 @@ img{
     left: 10px;
     font-size: var(--font-size-11);
 }
-
 /*BLOG SECTION */
 
 /*acava .blog*/container{
@@ -913,18 +1144,26 @@ img{
 .contact-info .info-box:hover{
     transform: translateY(-5px);
     box-shadow: 0 10px 10px -5px #0005;
+
 }
 
 .contact-info .info-box ion-icon{
     font-size: var(--font-size-48);
     color: var(--color-white-70);
     margin-bottom: 10px;
+    transition: 0.25s;
+
 }
+.contact-info .info-box:hover ion-icon {
+    color: white;
+}
+
 
 .contact-info .info-box p{
     font-size: var(--font-size-16);
     font-weight: 600;
     color: var(--color-white-95);
+    
 }
 
 .contact-form{
@@ -1067,4 +1306,81 @@ img{
         margin-bottom: 40px;
     }
 
+}
+
+
+/*CSS SOFTWARE ZONE*/
+
+.software-section {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas para pantallas grandes */
+    gap: 20px;
+}
+
+
+
+.categoria-m1, .categoria-l1, .categoria-d1, .categoria-mo1 {
+    margin-bottom: 30px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #303030;
+    box-shadow: 10px 10px 3px 2px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column; /* Hace que los textos estén arriba y las imágenes abajo */
+    align-items: center; /* Centra las imágenes y el texto */
+    text-align: center; /* Centra el texto */
+}
+
+.categoria-m1 h2, .categoria-l1 h2, .categoria-d1 h2, .categoria-mo1 h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px; /* Separación entre texto y las imágenes */
+}
+
+.software-item-m1, .software-item-l1, .software-item-d1, .software-item-mo1 {
+    display: flex;
+    flex-direction: column; /* Las imágenes estarán en columna, con el texto abajo */
+    justify-content: center;
+    align-items: center; /* Centra el contenido */
+    gap: 2px; /* Espacio entre las imágenes y el texto */
+    margin-top: 10px;
+    width: 100%;
+}
+
+.software-item-m1 img, .software-item-l1 img, .software-item-d1 img, .software-item-mo1 img {
+    width: 50px; /* Tamaño fijo para las imágenes */
+    height: 50px; /* Tamaño fijo para las imágenes */
+    object-fit: contain; /* Ajusta las imágenes sin deformarlas */
+    border-radius: 5px;
+    background-color: white;
+    padding: 3px;
+    border: 1px solid #ccc;
+}
+
+/* Aseguramos que los textos estén centrados debajo de las imágenes */
+.software-item-m1 p, .software-item-l1 p, .software-item-d1 p, .software-item-mo1 p {
+    margin-top: 5px; /* Separación entre la imagen y el texto */
+    color: white;
+    font-size: 0.9rem; /* Ajustamos el tamaño del texto */
+    font-weight: normal;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+    .software-section {
+        grid-template-columns: repeat(1, 1fr); /* Dos columnas para tabletas */
+    }
+}
+
+@media (max-width: 480px) {
+    .software-section {
+        grid-template-columns: 1fr; /* Una columna para móviles */
+    }
+    .software-item-m1 img, .software-item-l1 img, .software-item-d1 img, .software-item-mo1 img {
+        width: 50px; /* Las imágenes se mantienen de 50px */
+        height: 50px;
+    }
 }

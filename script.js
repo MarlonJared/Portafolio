@@ -207,3 +207,215 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+//parte de galeria portafolio
+
+// Filtrar imágenes por categorías
+// Filtrado de imágenes y videos
+const filterButtons = document.querySelectorAll('.filter-buttons button');
+const images = document.querySelectorAll('.img_gallery');
+const videos = document.querySelectorAll('.video_gallery');
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const filter = button.getAttribute('data-filter');
+
+        // Quitar la clase 'active' de todos los botones
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        // Filtrar imágenes
+        images.forEach(image => {
+            image.style.display = (filter === 'all' || image.getAttribute('data-category') === filter) ? '' : 'none';
+        });
+
+        // Filtrar videos
+        videos.forEach(video => {
+            video.style.display = (filter === 'all' || video.getAttribute('data-category') === filter) ? '' : 'none';
+        });
+    });
+});
+
+
+
+// Lightbox (ver imagen en grande)
+const gallery = document.querySelector('.gallery_portafolio');
+const lightbox = document.querySelector('.lightbox');
+const lightboxImg = document.querySelector('.lightbox-img');
+const closeBtn = document.querySelector('.close-btn');
+const downloadBtn = document.querySelector('.download-btn');
+
+let scale = 1;
+let isDragging = false;
+let startX = 0, startY = 0;
+let translateX = 0, translateY = 0;
+
+// Función para centrar la imagen
+function centerImage() {
+    lightboxImg.style.transform = `scale(${scale}) translate(0px, 0px)`;
+    translateX = 0;
+    translateY = 0;
+}
+
+// Mostrar imagen en el lightbox
+gallery.addEventListener('click', (e) => {
+    if (e.target.classList.contains('img_gallery')) {
+        lightbox.style.display = 'flex';
+        lightboxImg.src = e.target.src;
+        downloadBtn.href = e.target.src;
+
+        // Esperar a que la imagen cargue y centrarla
+        lightboxImg.onload = () => {
+            centerImage();
+        };
+
+        // Resetear transformaciones
+        scale = 1;
+    }
+});
+
+// Cerrar lightbox
+closeBtn.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+});
+
+// Descargar imagen
+downloadBtn.addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.href = lightboxImg.src;
+    link.download = 'image.jpg';
+    link.click();
+});
+
+// Cerrar lightbox al hacer clic fuera de la imagen
+lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+        lightbox.style.display = 'none';
+    }
+});
+
+// Zoom con scroll
+lightboxImg.addEventListener('wheel', (e) => {
+    e.preventDefault();
+
+    let zoomSpeed = 0.1;
+    let maxScale = 3;
+    let minScale = 1;
+
+    // Ajustar la escala
+    scale += e.deltaY > 0 ? -zoomSpeed : zoomSpeed;
+    scale = Math.min(maxScale, Math.max(minScale, scale));
+
+    // Aplicar transformación
+    lightboxImg.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+});
+
+// Detectar cuando se empieza a arrastrar
+lightboxImg.addEventListener('mousedown', (e) => {
+    if (scale > 1) {
+        isDragging = true;
+        startX = e.clientX - translateX;
+        startY = e.clientY - translateY;
+        lightboxImg.style.cursor = 'grabbing';
+    }
+});
+
+// Detectar cuando se suelta el mouse
+document.addEventListener('mouseup', () => {
+    isDragging = false;
+    lightboxImg.style.cursor = 'grab';
+
+});
+
+// Movimiento al arrastrar la imagen
+document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+
+    translateX = e.clientX - startX;
+    translateY = e.clientY - startY;
+
+    lightboxImg.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+});
+
+// Recalcular posición cuando se redimensiona la ventana
+window.addEventListener('resize', () => {
+    if (lightbox.style.display === 'flex') {
+        centerImage();
+    }
+});
+
+//------------------------------------------------------------
+//ESTRUCTURA FUNCION DE SLIDER COMPARACIÓN DE IMAGEN
+
+const slider = document.getElementById("slider");
+const sliderLine = document.getElementById("slider-line");
+
+slider.addEventListener("input", function () {
+    const frontImage = document.querySelector(".front-img");
+    const value = this.value;
+
+    // Cambia el clip-path de la imagen frontal
+    frontImage.style.clipPath = `polygon(0 0, ${value}% 0, ${value}% 100%, 0% 100%)`;
+
+    // Mueve la línea vertical
+    sliderLine.style.left = `${value}%`;
+});
+
+
+//------------------------------------------------------------------------------------
+//ENCENDER EN GALERIA LOS DE EFECTO SLIDER PARA MOVILES, EVENTO DE CLICK
+// Obtener todas las imágenes con la clase .lusido
+const lusidoImages = document.querySelectorAll('.lusido');
+
+// Función para cambiar el filtro de las imágenes
+function applyFullColorFilter(image2) {
+    console.log("Evento activado en:", image2); // Depuración
+    image2.style.filter = 'grayscale(0%) brightness(1)';
+}
+
+// Función para restablecer los filtros
+function resetFilters() {
+    lusidoImages.forEach(image2 => {
+        image2.style.filter = 'grayscale(100%) brightness(0.5)';
+    });
+}
+
+// Aplicar eventos a cada imagen con la clase .lusido
+lusidoImages.forEach(image2 => {
+    // Evento para clic (desktop y móviles)
+    image2.addEventListener('click', (e) => {
+        e.stopPropagation(); // Evita que el evento se propague a otros elementos
+        applyFullColorFilter(image2);
+    });
+
+    // Evento para touch (móviles)
+    image2.addEventListener('touchstart', (e) => {
+        e.stopPropagation(); // Evita que el evento se propague a otros elementos
+        applyFullColorFilter(image2);
+    });
+
+    // Evento para mouseenter (hover)
+    image2.addEventListener('mouseenter', () => {
+        applyFullColorFilter(image2);
+    });
+
+    // Evento para mouseleave (salida del hover)
+    image2.addEventListener('mouseleave', () => {
+        resetFilters();
+    });
+});
+
+// Escuchar clics en cualquier parte del documento
+document.addEventListener('click', (e) => {
+    // Verificar si el clic no ocurrió en una imagen con la clase .lusido
+    if (!e.target.classList.contains('lusido')) {
+        resetFilters(); // Restablecer los filtros
+    }
+});
+
+// Escuchar toques en cualquier parte del documento (para dispositivos móviles)
+document.addEventListener('touchstart', (e) => {
+    // Verificar si el toque no ocurrió en una imagen con la clase .lusido
+    if (!e.target.classList.contains('lusido')) {
+        resetFilters(); // Restablecer los filtros
+    }
+});
