@@ -111,6 +111,8 @@ p, blockquote{
     color: var(--color-white-100);
 }
 
+
+
 ion-icon{ --ionicon-stroke-width: 20px;}
 
 .section-heading{
@@ -1154,8 +1156,14 @@ img{
     transition: 0.25s;
 
 }
-.contact-info .info-box:hover ion-icon {
+.contact-info .info-box:hover ion-icon  {
     color: white;
+}
+.logo_Sketchfab{
+    fill: rgb(170, 170, 170);
+}
+.logo_Sketchfab:hover{
+    fill: white;
 }
 
 

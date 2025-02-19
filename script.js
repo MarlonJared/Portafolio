@@ -225,16 +225,17 @@ filterButtons.forEach(button => {
 
         // Filtrar imágenes
         images.forEach(image => {
-            image.style.display = (filter === 'all' || image.getAttribute('data-category') === filter) ? '' : 'none';
+            const categories = image.getAttribute('data-category')?.split(' ') || [];
+            image.style.display = (filter === 'all' || categories.includes(filter)) ? '' : 'none';
         });
 
         // Filtrar videos
         videos.forEach(video => {
-            video.style.display = (filter === 'all' || video.getAttribute('data-category') === filter) ? '' : 'none';
+            const categories = video.getAttribute('data-category')?.split(' ') || [];
+            video.style.display = (filter === 'all' || categories.includes(filter)) ? '' : 'none';
         });
     });
 });
-
 
 
 // Lightbox (ver imagen en grande)
@@ -344,22 +345,26 @@ window.addEventListener('resize', () => {
 });
 
 //------------------------------------------------------------
-//ESTRUCTURA FUNCION DE SLIDER COMPARACIÓN DE IMAGEN
+// 
+// //ESTRUCTURA FUNCION DE SLIDER COMPARACIÓN DE IMAGEN
 
-const slider = document.getElementById("slider");
-const sliderLine = document.getElementById("slider-line");
+// Seleccionamos todos los sliders y sus líneas
+const sliders = document.querySelectorAll(".slider");
 
-slider.addEventListener("input", function () {
-    const frontImage = document.querySelector(".front-img");
-    const value = this.value;
+sliders.forEach(slider => {
+    slider.addEventListener("input", function () {
+        const parent = slider.closest('.before-after'); // Buscamos el contenedor padre
+        const frontImage = parent.querySelector(".front-img");
+        const sliderLine = parent.querySelector(".slider-line");
+        const value = this.value;
 
-    // Cambia el clip-path de la imagen frontal
-    frontImage.style.clipPath = `polygon(0 0, ${value}% 0, ${value}% 100%, 0% 100%)`;
+        // Cambia el clip-path de la imagen frontal
+        frontImage.style.clipPath = `polygon(0 0, ${value}% 0, ${value}% 100%, 0% 100%)`;
 
-    // Mueve la línea vertical
-    sliderLine.style.left = `${value}%`;
+        // Mueve la línea vertical
+        sliderLine.style.left = `${value}%`;
+    });
 });
-
 
 //------------------------------------------------------------------------------------
 //ENCENDER EN GALERIA LOS DE EFECTO SLIDER PARA MOVILES, EVENTO DE CLICK
