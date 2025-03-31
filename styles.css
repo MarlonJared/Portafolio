@@ -33,6 +33,111 @@
     --transition-default: 0.25s ease;
 }
 
+/*efecto glich VIDEOJUEGOS MENU*/
+
+
+
+.glitch--style-1 {
+    margin: 5px;
+  --gap-horizontal: 10px;
+  --gap-vertical: 2px;
+  --time-anim: 2s;
+  --blend-mode-1: none;
+  --blend-mode-2: none;
+  --blend-mode-3: none;
+  --blend-mode-4: none;
+  --blend-mode-5: none;
+  --blend-color-1: transparent;
+  --blend-color-2: transparent;
+  --blend-color-3: transparent;
+  --blend-color-4: transparent;
+  --blend-color-5: transparent;
+}
+
+
+.glitch:before,
+.glitch:after {
+  content: attr(data-text);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font: inherit;
+  visibility: visible; /* Hacemos visibles los pseudo-elementos */
+  z-index: -20;
+}
+
+.glitch:before {
+  left: -2px;
+  text-shadow: 2px 0 #00D5FF; /* Efecto de sombra rosada */
+  clip: auto;
+}
+
+.glitch:after {
+  left: 2px;
+  text-shadow: 1px 0 #ff4a4a; /* Efecto de sombra azul */
+  clip: auto;
+}
+
+.glitch.style-1 {
+  &:before {
+    animation: glitch-anim-1 3s ease-in-out infinite;
+  }
+
+  &:after {
+    animation: glitch-anim 2s ease-in-out infinite;
+  }
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(29px, 9999px, 11px, 0);
+    transform: translateX(-5px);
+  }
+  25% {
+    clip: rect(11px, 9999px, 15px, 0);
+    transform: translateX(5px);
+  }
+  50% {
+    clip: rect(18px, 9999px, 1px, 0);
+    transform: translateX(-5px);
+  }
+  75% {
+    clip: rect(17px, 9999px, 35px, 0);
+    transform: translateX(5px);
+  }
+  100% {
+    clip: rect(3px, 9999px, 27px, 0);
+    transform: translateX(-5px);
+  }
+}
+
+@keyframes glitch-anim-1 {
+  0% {
+    clip: rect(25px, 9999px, 19px, 0);
+    transform: translateX(3px);
+  }
+  25% {
+    clip: rect(12px, 9999px, 151px, 0);
+    transform: translateX(-3px);
+  }
+  50% {
+    clip: rect(29px, 9999px, 11px, 0);
+    transform: translateX(5px);
+  }
+  75% {
+    clip: rect(24px, 9999px, 31px, 0);
+    transform: translateX(-3px);
+  }
+  100% {
+    clip: rect(20px, 9999px, 25px, 0);
+    transform: translateX(3px);
+  }
+}
+
+
+/*efecto glich VIDEOJUEGOS MENU*/
+
+
 /*circulos animados de foto*/
 
 /*circulos animados de foto*/
@@ -100,11 +205,15 @@ h3{
 
 
 
+
 p, blockquote{
     color: var(--color-white-80);
     font-size: var(--font-size-14);
     line-height: 1.8;
 }
+
+
+
 
 ::selection{
     background: var(--background-orange);
@@ -125,8 +234,28 @@ ion-icon{ --ionicon-stroke-width: 20px;}
     font-size: var(--font-size-14);
     text-align: right;
     font-weight: 300;
-    color: var(--color-white-70);
+    color: var(--color-white-100);
 }
+.h2-container {
+    display: flex;
+    justify-content: center; /* Centra el contenido */
+}
+
+.section-sub-heading-centered {
+    font-size: var(--font-size-21);
+    text-align: center;
+    font-weight: 300;
+    color: var(--color-white-100);
+    margin: 15px auto;
+    display: inline-block;
+    box-shadow: inset 0 -2px 0 var(--background-orange);
+    width: fit-content;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+
+
 
 .btn-primary {
     flex: 1 1 calc(50% - 15px); /* Ocupa el 50% del ancho menos el gap */
@@ -443,6 +572,7 @@ img{
 .about,
 .resume,
 .portfolio,
+.videojuegos,
 /*acava .blog*/
 .contact {
     position: absolute;
@@ -456,7 +586,7 @@ img{
     transition: all .5s ease;
 }
 
-:is(.about, .resume, .portfolio, /*acava .blog*/ .contact).active{
+:is(.about, .resume, .portfolio, .videojuegos, /*acava .blog*/ .contact).active{
     top: 0;
     transform: scale(1);
     z-index: 10;
@@ -621,6 +751,7 @@ img{
 
 .resume,
 .portfolio,
+.videojuegos,
 /*acava .blog*/
 .contact{ padding: 50px 50px;}
 
@@ -759,7 +890,7 @@ img{
     color: var(--color-white-60);
 }
 
-.resume-row .progress-bar{
+.resume-row .progress-bar {
     width: 100%;
     height: 10px;
     border-radius: 10px;
@@ -768,11 +899,15 @@ img{
     margin-bottom: 10px;
 }
 
-.resume-row .progress{
+.resume-row .progress {
     height: 100%;
     border-radius: 10px;
     background: var(--background-orange);
 }
+
+
+
+
 
 /*PORTFOLIO SECTION*/
 
@@ -1135,7 +1270,7 @@ img{
     margin-bottom: 100px;
 }
 
-.contact-info .info-box{
+.contact-info .info-box {
     background: var(--background-dark-80);
     border: 1px solid var(--background-dark-70);
     text-align: center;
@@ -1149,13 +1284,27 @@ img{
 
 }
 
-.contact-info .info-box ion-icon{
+.contact-info .info-box ion-icon {
     font-size: var(--font-size-48);
     color: var(--color-white-70);
     margin-bottom: 10px;
     transition: 0.25s;
+}
+
+.info-box:hover .iconos_contacto {
+    color: var(--color-white-95) ;
+    fill: var(--color-white-95);
+    transition: 0.1s;
 
 }
+.iconos_contacto {
+    color: var(--color-white-60);
+    fill: var(--color-white-60);
+    transition: 0.1s;
+
+}
+
+
 .contact-info .info-box:hover ion-icon  {
     color: white;
 }
@@ -1165,7 +1314,9 @@ img{
 .logo_Sketchfab:hover{
     fill: white;
 }
-
+.logo_videojuegos{
+    fill: rgb(170, 170, 170);
+}
 
 .contact-info .info-box p{
     font-size: var(--font-size-16);
@@ -1241,7 +1392,7 @@ img{
         opacity: 1;
     }
 
-    .about, .resume, .portfolio, /*acava .blog*/ .contact{
+    .about, .resume, .portfolio,.videojuegos,  /*acava .blog*/ .contact{
         width: 100%;
     }
 
@@ -1392,3 +1543,328 @@ img{
         height: 50px;
     }
 }
+
+
+/* area videojuegos*/
+
+/* Estilos para la sección de videojuegos */
+/* Estilos para la sección de videojuegos *//* Estilos para la sección de videojuegos */
+.videojuegos-container {
+    padding: 10px;
+    background: var(--background-dark-90);
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.videojuegos-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.videojuego-item {
+    background: var(--background-dark-80);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease ;
+    border: 2px solid var(--background-dark-70  );
+}
+
+.videojuego-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--background-dark-60  );
+
+}
+
+.videojuego-imagen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    flex: 1;
+}
+
+.videojuego-imagen img {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.videojuego-imagen h3 {
+    font-size: var(--font-size-14);
+    color: var(--color-white-95);
+    text-align: center;
+}
+
+.videojuego-descripcion {
+    flex: 3;
+    text-align: left;
+}
+
+.videojuego-descripcion p {
+    font-size: var(--font-size-12);
+    color: var(--color-white-80);
+    line-height: 1.4;
+    margin: 0;
+}
+
+.videojuego-motor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.videojuego-motor img {
+    width: 40px;
+    height: 40px;
+}
+
+.videojuego-motor p {
+    font-size: var(--font-size-12);
+    color: var(--color-white-95);
+    margin: 0;
+}
+
+.videojuego-probar {
+    display: flex;
+    flex-direction: column; /* Cambia a columna para apilar los elementos verticalmente */
+    justify-content: center;
+    align-items: center; /* Centra todos los elementos */
+    gap: 20px; /* Añade espacio entre los SVGs y el botón */
+}
+
+.btn-probar {
+    padding: 8px 16px;
+    background: var(--background-orange);
+    color: var(--color-white-100);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-decoration: none;
+    font-size: var(--font-size-12);
+}
+
+.btn-probar:hover {
+    background: #ff6b6b;
+}
+
+/* Media Queries para Responsive Design */
+@media screen and (max-width: 768px) {
+    .videojuego-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .videojuego-imagen,
+    .videojuego-descripcion,
+    .videojuego-motor,
+    .videojuego-probar {
+        width: 100%;
+        text-align: left;
+    }
+
+    .videojuego-imagen {
+        align-items: flex-start;
+    }
+
+    .videojuego-motor {
+        align-items: flex-start;
+    }
+
+    .videojuego-probar {
+        justify-content: flex-start;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .videojuego-item {
+        padding: 8px;
+    }
+
+    .videojuego-imagen img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .videojuego-imagen h3 {
+        font-size: var(--font-size-12);
+    }
+
+    .videojuego-descripcion p {
+        font-size: var(--font-size-11);
+    }
+
+    .videojuego-motor img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .videojuego-motor p {
+        font-size: var(--font-size-11);
+    }
+
+    .btn-probar {
+        padding: 6px 12px;
+        font-size: var(--font-size-11);
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .videojuego-item {
+        padding: 5px;
+    }
+
+    .videojuego-imagen img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .videojuego-imagen h3 {
+        font-size: var(--font-size-11);
+    }
+
+    .videojuego-descripcion p {
+        font-size: var(--font-size-10);
+    }
+
+    .videojuego-motor img {
+        width: 25px;
+        height: 25px;
+    }
+
+    .videojuego-motor p {
+        font-size: var(--font-size-10);
+    }
+
+    .btn-probar {
+        padding: 5px 10px;
+        font-size: var(--font-size-10);
+    }
+}
+.iconos-videojuegos{
+    /*logo unity*/
+    border-radius: 100%;
+    justify-content: center;
+    fill: rgb(165, 165, 165);
+}
+
+
+
+.videojuego-motor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los elementos horizontalmente */
+    justify-content: center; /* Centra los elementos verticalmente */
+    gap: 10px; /* Espacio entre los elementos (el SVG y el texto) */
+    text-align: center; /* Centra el texto dentro del <p> */
+}
+
+.videojuego-motor svg {
+    width: 35px; /* Puedes ajustar el tamaño del SVG según sea necesario */
+    height: 35px;
+    margin-bottom: 5px; /* Espacio entre el SVG y el texto */
+}
+
+.videojuego-motor p {
+    font-size: var(--font-size-12);
+    color: var(--color-white-95);
+    margin: 0; /* Elimina márgenes extra en el <p> */
+}
+.videojuego-imagen {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los elementos horizontalmente */
+    justify-content: center; /* Centra los elementos verticalmente */
+    gap: 5px; /* Espacio entre la imagen y el título */
+    flex: 1;
+}
+
+.videojuego-imagen img {
+    width: 125px; /* Tamaño del contenedor */
+    height: 125px; /* Tamaño del contenedor */
+    border-radius: 8px; /* Bordes redondeados */
+    object-fit: cover; /* Escala la imagen para cubrir el contenedor sin distorsión */
+    background-color: white; /* Fondo blanco visible si la imagen no cubre todo */
+}
+
+
+.videojuego-imagen h3 {
+    font-size: var(--font-size-14);
+    color: var(--color-white-95);
+    text-align: center; /* Centra el texto dentro del h3 */
+    margin: 0; /* Elimina márgenes extra alrededor del título */
+}
+
+.videojuegos-svg-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Espacio entre los SVGs */
+    margin-bottom: 0; /* Elimina el margen inferior extra */
+}
+
+.videojuego-item:hover .iconos-videojuegos,
+.videojuego-item:hover .logo_videojuegos {
+    fill: white; /* Cambia el color de los iconos a blanco */
+}
+
+/**/
+.icono_menu_amburguesa_color2{
+    fill: var(--color-white-80);
+}
+
+.icono_menu_amburguesa {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.icono_menu_amburguesa svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease, opacity 0.3s ease;  /* Suaviza la escala y opacidad */
+}
+
+
+
+
+/* Inicialmente, el ícono de hamburguesa es visible */
+#iconoHamburguesa {
+    opacity: 1;
+}
+
+/* Inicialmente, el ícono de cerrar está oculto */
+#iconoCerrar {
+    opacity: 0;
+}
+
+/* Cuando el menú está activo, ocultamos el ícono de hamburguesa y mostramos el ícono de cerrar */
+.side-bar.active #iconoHamburguesa {
+
+    opacity: 0;  /* Ocultamos el ícono de hamburguesa */
+}
+
+.side-bar.active #iconoCerrar {
+
+    opacity: 1;  /* Mostramos el ícono de cerrar */
+}
+
