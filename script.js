@@ -1,8 +1,7 @@
-const menuToggler = document.querySelector('.menu-toggler, .icono_menu_amburguesa');
-const sideBar = document.querySelector('.side-bar');
 
-const iconoHamburguesa = document.getElementById('iconoHamburguesa');
-const iconoCerrar = document.getElementById('iconoCerrar');
+
+const menuToggler = document.querySelector('.menu-toggler');
+const sideBar = document.querySelector('.side-bar');
 
 const navItemLinks = document.querySelectorAll('.nav li a');
 const pages = document.querySelectorAll('.page');
@@ -10,114 +9,102 @@ const pages = document.querySelectorAll('.page');
 const filterBtn = document.querySelectorAll('.filter-item');
 const itemCategory = document.querySelectorAll('.item-category');
 
-const elemento = document.querySelector ('.icono_escala');
+/*Slidebar Toggle*/ 
 
-elemento.addEventListener('mouseenter', function() {
-    elemento.style.transition = 'transform 0.2s ease, fill 0.3s ease';
-    elemento.setAttribute('fill', '#fff');
-    iconoHamburguesa.setAttribute('fill', '#fff');
-    elemento.style.transform = 'scale(1.2)';  // Aumentamos un 10% el tamaño
-});
+menuToggler.addEventListener('click', function(){
+    sideBar.classList.toggle('active');
+})
 
-// Cuando el mouse sale del área del elemento, volvemos al tamaño original
-elemento.addEventListener('mouseleave', function() {
-    elemento.style.transition = 'transform 0.2s ease, fill 0.3s ease';
-    elemento.setAttribute('fill', '#d5d5d5');
-    iconoHamburguesa.setAttribute('fill', '#d5d5d5');
-    elemento.style.transform = 'scale(1)';  // Volvemos al tamaño original
-});
+/* Page Navigation Functionality */
 
+for(let i = 0; i < navItemLinks.length; i++){
+    navItemLinks[i].addEventListener('click', function(){
 
-let rotation = 0; // Variable para acumular grados de rotación
+        const itemLinkText = this.textContent.toLowerCase();
 
-menuToggler.addEventListener('click', function () {
-       // Alternamos el valor de rotación entre 0 y 180 grados
-    rotation = rotation === 0 ? 180 : 0; 
-
-    // Primero, hacemos más pequeño los íconos (efecto escala)
-    iconoHamburguesa.style.transform = `scale(0.5) rotate(${rotation}deg)`;
-    iconoCerrar.style.transform = `scale(0.5) rotate(${rotation}deg)`; // Rotamos 180 grados más para el ícono de cerrar
-
-    // Añadimos un pequeño retraso para que la escala termine antes de rotar
-    setTimeout(function () {
-        // Alternamos el menú
-        sideBar.classList.toggle('active');
-
-        // Cuando el menú está activo (abierto), mostramos el ícono de cerrar y ocultamos el de hamburguesa
-        if (sideBar.classList.contains('active')) {
-            iconoHamburguesa.style.opacity = '0';
-            iconoCerrar.style.opacity = '1';
-        } else {
-            iconoHamburguesa.style.opacity = '1';
-            iconoCerrar.style.opacity = '0';
-        }
-
-        // Ahora, restauramos la escala a 1 para que se vea el ícono en su tamaño original
-        iconoHamburguesa.style.transition = 'transform 0.2s ease';
-        iconoCerrar.style.transition = 'transform 0.2s ease';
-        iconoHamburguesa.style.transform = `rotate(${rotation + 180}deg) scale(1)`;
-        iconoCerrar.style.transform = `rotate(${rotation - 180}deg) scale(1)`;
-    }, 80); // El tiempo del retraso es el mismo que el de la animación de escala
-});
-
-/* Page Navigation Functionality (Arreglado para Traducciones) */
-navItemLinks.forEach(link => {
-    link.addEventListener('click', function () {
-        navItemLinks.forEach(nav => nav.classList.remove('active'));
-        this.classList.add('active');
-    });
-});
-
-/* Adding event listener in filter buttons */
-filterBtn.forEach(button => {
-    button.addEventListener('click', function () {
-        filterBtn.forEach(btn => btn.classList.remove('active'));
-        this.classList.add('active');
-
-        itemCategory.forEach(item => {
-            const categories = item.textContent.trim().toLowerCase();
-            if (this.textContent.toLowerCase() === "all" || categories.includes(this.textContent.toLowerCase())) {
-                item.parentElement.classList.add('active');
-            } else {
-                item.parentElement.classList.remove('active');
+        for(let i = 0; i < pages.length; i++){
+            if(pages[i].classList.contains(itemLinkText)){
+                pages[i].classList.add('active');
+                navItemLinks[i].classList.add('active');
+            }else{
+                pages[i].classList.remove('active');
+                navItemLinks[i].classList.remove('active');
             }
-        });
+        }
     });
-});
+}
 
-/* Efecto de palabras aleatorias en el loader */
+/* Adding eventlistener in filter buttons */
+
+for(let i = 0; i < filterBtn.length; i++){
+    filterBtn[i].addEventListener('click', function(){
+        for(let i = 0; i < filterBtn.length; i++){
+            filterBtn[i].classList.remove('active');
+        }
+        this.classList.add('active');
+
+        for(let i = 0; i < itemCategory.length; i++){
+            const itemCategoryText = itemCategory[i].textContent;
+            switch(this.textContent){
+                case itemCategoryText:
+                    itemCategory[i].parentElement.classList.add('active');
+                    break;
+                case 'All':
+                    itemCategory[i].parentElement.classList.add('active');
+                    break;
+                default:
+                    itemCategory[i].parentElement.classList.remove('active');
+            }
+        }
+    });
+}
+
+//esta parte es para actualizaciones
+//en este caso es para efecto rellenar de parrafo que puedo hacer
 var words = [
-    'ayudar', 'contribuir', 'resolver', 'crear', 'mejorar', 'actuar',
-    'aprender', 'explorar', 'innovar', 'transformar', 'decidir', 'colaborar'
+    'ayudar',
+    'contribuir',
+    'resolver',
+    'crear',
+    'mejorar',
+    'actuar',
+    'aprender',
+    'explorar',
+    'innovar',
+    'transformar',
+    'decidir',
+    'colaborar'
 ];
 
 var letters = "abcdefghijklmnopqrstuvwxyz#%&^+=-",
     speed = 250,
     steps = 4,
     loader = document.querySelector('#loader'),
-    dynamicWord = document.querySelector('#dynamic-word');
+    dynamicWord = document.querySelector('#dynamic-word'); // Aquí seleccionamos el span
 
 function getRandomWord() {
-    return words[Math.floor(Math.random() * words.length)];
+    var randomWord = words[Math.floor(Math.random() * words.length)];
+    return randomWord;
 }
 
 function getRandomLetter() {
-    return letters[Math.floor(Math.random() * letters.length)];
+    var randomLetter = letters[Math.floor(Math.random() * letters.length)];
+    return randomLetter;
 }
 
 function randomWordLoop() {
     var word = getRandomWord();
     var textLength = word.length;
-    for (var i = 0; i < textLength; i++) {
-        (function (i, word) {
+    for(var i = 0; i < textLength; i++) {    
+        (function(i, word){
             letterAppear(i, word);
         })(i, word);
     }
 
     function letterAppear(i, word) {
-        setTimeout(function () {
+        setTimeout(function() {
             randomLetters(i, word);
-        }, speed * i);
+        }, speed * i);  
     }
 
     function randomLetters(i, word) {
@@ -127,9 +114,9 @@ function randomWordLoop() {
     }
 
     function charsAnim(i, word, j) {
-        setTimeout(function () {
-            var count = j;
-            if (j < steps) {
+        setTimeout(function() {
+            var count = j; 
+            if (j < steps) {           
                 randomChar(i, word, count, j);
             } else {
                 goodChar(i, word, count, j);
@@ -138,13 +125,17 @@ function randomWordLoop() {
     }
 
     function randomChar(i, word, count, j) {
-        var letter = getRandomLetter();
-        var oldText = j > 0 ? dynamicWord.textContent.slice(0, -1) : dynamicWord.textContent;
-        dynamicWord.textContent = oldText + letter;
+        var letter = getRandomLetter();    
+        if (j > 0) {
+            var oldText = dynamicWord.textContent.slice(0, -1);
+        } else {
+            var oldText = dynamicWord.textContent;
+        }
+        dynamicWord.textContent = oldText + letter;    
     }
 
     function goodChar(i, word, count, j) {
-        var oldText = dynamicWord.textContent.slice(0, -1);
+        var oldText = dynamicWord.textContent.slice(0, -1);  
         dynamicWord.textContent = oldText + word[i];
         if (i == textLength - 1) {
             removeWord();
@@ -152,7 +143,7 @@ function randomWordLoop() {
     }
 
     function removeWord() {
-        setTimeout(function () {
+        setTimeout(function() {
             for (var k = 0; k < textLength; k++) {
                 removeLetters(k);
             }
@@ -160,7 +151,7 @@ function randomWordLoop() {
     }
 
     function removeLetters(k) {
-        setTimeout(function () {
+        setTimeout(function() {
             removeLetter(k);
         }, 75 * k);
     }
@@ -176,20 +167,50 @@ function randomWordLoop() {
 
 randomWordLoop();
 
-/* Funcionalidad para enviar correo a Gmail */
+//para correo electronico funcional
+
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById('send-gmail')?.addEventListener('click', function (event) {
-        event.preventDefault();
-        const fullName = encodeURIComponent(document.getElementById('full_name').value);
-        const email = encodeURIComponent(document.getElementById('email').value);
-        const subject = encodeURIComponent(document.getElementById('subject').value);
-        const message = encodeURIComponent(document.getElementById('message').value);
-        const mailtoLink = `https://mail.google.com/mail/?view=cm&fs=1&to=jaredospina2013@gmail.com&su=${subject}&body=Nombre:%20${fullName}%0ACorreo Origen:%20${email}%0AMensaje:%20${message}`;
+
+    // Esta función se ejecuta cuando el usuario hace clic en "Enviar correo desde Gmail"
+    document.getElementById('send-gmail').addEventListener('click', function(event) {
+        event.preventDefault(); // Evitar que recargue la página o navegue al 'href'
+
+        // Obtener los valores del formulario
+        const fullName = document.getElementById('full_name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+
+        // Codificar los valores para la URL (esto asegura que los caracteres especiales se manejen correctamente)
+        const encodedFullName = encodeURIComponent(fullName);
+        const encodedEmail = encodeURIComponent(email);
+        const encodedSubject = encodeURIComponent(subject);
+        const encodedMessage = encodeURIComponent(message);
+
+        // Construir el enlace mailto con los valores del formulario
+        const mailtoLink = `https://mail.google.com/mail/?view=cm&fs=1&to=jaredospina2013@gmail.com&su=${encodedSubject}&body=Nombre:%20${encodedFullName}%0ACorreo Origen:%20${encodedEmail}%0AMensaje:%20${encodedMessage}`;
+
+        // Mostrar el enlace generado (para pruebas)
+        console.log(mailtoLink);
+
+        // Intentar abrir Gmail en una nueva pestaña
         window.open(mailtoLink, '_blank');
     });
+
+    // Esta función se ejecuta cuando el usuario hace clic en "Otra acción"
+    document.getElementById('another-action').addEventListener('click', function(event) {
+        event.preventDefault(); // Evitar que recargue la página o navegue al 'href'
+
+        // Aquí puedes agregar la lógica para la otra acción, como enviar el formulario a otro destino, hacer una llamada a una API, etc.
+        console.log('Se realizó otra acción.'); // Ejemplo de otra acción, en este caso solo mostramos un mensaje en la consola.
+    });
+
 });
 
-/* Galería de Portafolio */
+//parte de galeria portafolio
+
+// Filtrar imágenes por categorías
+// Filtrado de imágenes y videos
 const filterButtons = document.querySelectorAll('.filter-buttons button');
 const images = document.querySelectorAll('.img_gallery');
 const videos = document.querySelectorAll('.video_gallery');
@@ -197,40 +218,68 @@ const videos = document.querySelectorAll('.video_gallery');
 filterButtons.forEach(button => {
     button.addEventListener('click', () => {
         const filter = button.getAttribute('data-filter');
+
+        // Quitar la clase 'active' de todos los botones
         filterButtons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
 
+        // Filtrar imágenes
         images.forEach(image => {
-            image.style.display = (filter === 'all' || image.getAttribute('data-category')?.includes(filter)) ? '' : 'none';
+            const categories = image.getAttribute('data-category')?.split(' ') || [];
+            image.style.display = (filter === 'all' || categories.includes(filter)) ? '' : 'none';
         });
 
+        // Filtrar videos
         videos.forEach(video => {
-            video.style.display = (filter === 'all' || video.getAttribute('data-category')?.includes(filter)) ? '' : 'none';
+            const categories = video.getAttribute('data-category')?.split(' ') || [];
+            video.style.display = (filter === 'all' || categories.includes(filter)) ? '' : 'none';
         });
     });
 });
 
-/* Lightbox para imágenes */
+
+// Lightbox (ver imagen en grande)
 const gallery = document.querySelector('.gallery_portafolio');
 const lightbox = document.querySelector('.lightbox');
 const lightboxImg = document.querySelector('.lightbox-img');
 const closeBtn = document.querySelector('.close-btn');
 const downloadBtn = document.querySelector('.download-btn');
 
-let scale = 1, isDragging = false, startX = 0, startY = 0, translateX = 0, translateY = 0;
+let scale = 1;
+let isDragging = false;
+let startX = 0, startY = 0;
+let translateX = 0, translateY = 0;
 
+// Función para centrar la imagen
+function centerImage() {
+    lightboxImg.style.transform = `scale(${scale}) translate(0px, 0px)`;
+    translateX = 0;
+    translateY = 0;
+}
+
+// Mostrar imagen en el lightbox
 gallery.addEventListener('click', (e) => {
     if (e.target.classList.contains('img_gallery')) {
         lightbox.style.display = 'flex';
         lightboxImg.src = e.target.src;
         downloadBtn.href = e.target.src;
-        lightboxImg.onload = () => { centerImage(); };
+
+        // Esperar a que la imagen cargue y centrarla
+        lightboxImg.onload = () => {
+            centerImage();
+        };
+
+        // Resetear transformaciones
         scale = 1;
     }
 });
 
-closeBtn.addEventListener('click', () => { lightbox.style.display = 'none'; });
+// Cerrar lightbox
+closeBtn.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+});
 
+// Descargar imagen
 downloadBtn.addEventListener('click', () => {
     const link = document.createElement('a');
     link.href = lightboxImg.src;
@@ -238,19 +287,30 @@ downloadBtn.addEventListener('click', () => {
     link.click();
 });
 
+// Cerrar lightbox al hacer clic fuera de la imagen
 lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox) {
         lightbox.style.display = 'none';
     }
 });
 
+// Zoom con scroll
 lightboxImg.addEventListener('wheel', (e) => {
     e.preventDefault();
-    scale += e.deltaY > 0 ? -0.1 : 0.1;
-    scale = Math.min(3, Math.max(1, scale));
+
+    let zoomSpeed = 0.1;
+    let maxScale = 3;
+    let minScale = 1;
+
+    // Ajustar la escala
+    scale += e.deltaY > 0 ? -zoomSpeed : zoomSpeed;
+    scale = Math.min(maxScale, Math.max(minScale, scale));
+
+    // Aplicar transformación
     lightboxImg.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
 });
 
+// Detectar cuando se empieza a arrastrar
 lightboxImg.addEventListener('mousedown', (e) => {
     if (scale > 1) {
         isDragging = true;
@@ -260,96 +320,204 @@ lightboxImg.addEventListener('mousedown', (e) => {
     }
 });
 
+// Detectar cuando se suelta el mouse
 document.addEventListener('mouseup', () => {
     isDragging = false;
     lightboxImg.style.cursor = 'grab';
+
 });
 
+// Movimiento al arrastrar la imagen
 document.addEventListener('mousemove', (e) => {
     if (!isDragging) return;
+
     translateX = e.clientX - startX;
     translateY = e.clientY - startY;
+
     lightboxImg.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
 });
 
+// Recalcular posición cuando se redimensiona la ventana
 window.addEventListener('resize', () => {
     if (lightbox.style.display === 'flex') {
         centerImage();
     }
 });
 
-function centerImage() {
-    lightboxImg.style.transform = `scale(${scale}) translate(0px, 0px)`;
-    translateX = 0;
-    translateY = 0;
-}
+//------------------------------------------------------------
+// 
+// //ESTRUCTURA FUNCION DE SLIDER COMPARACIÓN DE IMAGEN
 
-/* Slider de comparación de imágenes */
+// Seleccionamos todos los sliders y sus líneas
 const sliders = document.querySelectorAll(".slider");
 
 sliders.forEach(slider => {
     slider.addEventListener("input", function () {
-        const parent = slider.closest('.before-after');
+        const parent = slider.closest('.before-after'); // Buscamos el contenedor padre
         const frontImage = parent.querySelector(".front-img");
         const sliderLine = parent.querySelector(".slider-line");
         const value = this.value;
 
+        // Cambia el clip-path de la imagen frontal
         frontImage.style.clipPath = `polygon(0 0, ${value}% 0, ${value}% 100%, 0% 100%)`;
+
+        // Mueve la línea vertical
         sliderLine.style.left = `${value}%`;
     });
 });
-/* Modo Lusido para móviles */
+
+//------------------------------------------------------------------------------------
+//ENCENDER EN GALERIA LOS DE EFECTO SLIDER PARA MOVILES, EVENTO DE CLICK
+// Obtener todas las imágenes con la clase .lusido
 const lusidoImages = document.querySelectorAll('.lusido');
 
-function applyFullColorFilter(image) {
-    console.log("Evento activado en:", image);
-    image.style.filter = 'grayscale(0%) brightness(1)';
-    image.style.transform = 'scale(1.1)'; // Escala la imagen al 110%
-    image.style.zIndex = '1000'; // Asegura que la imagen esté por encima de otros elementos
+// Función para cambiar el filtro de las imágenes
+function applyFullColorFilter(image2) {
+    console.log("Evento activado en:", image2); // Depuración
+    image2.style.filter = 'grayscale(0%) brightness(1)';
 }
 
+// Función para restablecer los filtros
 function resetFilters() {
-    lusidoImages.forEach(image => {
-        image.style.filter = 'grayscale(100%) brightness(0.5)';
-        image.style.transform = 'scale(1)'; // Restablece la escala a su tamaño original
-        image.style.zIndex = '1'; // Restablece el z-index al valor inicial
+    lusidoImages.forEach(image2 => {
+        image2.style.filter = 'grayscale(100%) brightness(0.5)';
     });
 }
 
-lusidoImages.forEach(image => {
-    // Evento para clic (desktop)
-    image.addEventListener('click', (e) => {
-        e.stopPropagation();
-        applyFullColorFilter(image);
+// Aplicar eventos a cada imagen con la clase .lusido
+lusidoImages.forEach(image2 => {
+    // Evento para clic (desktop y móviles)
+    image2.addEventListener('click', (e) => {
+        e.stopPropagation(); // Evita que el evento se propague a otros elementos
+        applyFullColorFilter(image2);
     });
 
     // Evento para touch (móviles)
-    image.addEventListener('touchstart', (e) => {
-        e.stopPropagation();
-        applyFullColorFilter(image);
+    image2.addEventListener('touchstart', (e) => {
+        e.stopPropagation(); // Evita que el evento se propague a otros elementos
+        applyFullColorFilter(image2);
     });
 
     // Evento para mouseenter (hover)
-    image.addEventListener('mouseenter', () => {
-        applyFullColorFilter(image);
+    image2.addEventListener('mouseenter', () => {
+        applyFullColorFilter(image2);
     });
 
     // Evento para mouseleave (salida del hover)
-    image.addEventListener('mouseleave', () => {
+    image2.addEventListener('mouseleave', () => {
         resetFilters();
     });
 });
 
 // Escuchar clics en cualquier parte del documento
 document.addEventListener('click', (e) => {
+    // Verificar si el clic no ocurrió en una imagen con la clase .lusido
     if (!e.target.classList.contains('lusido')) {
-        resetFilters();
+        resetFilters(); // Restablecer los filtros
     }
 });
 
 // Escuchar toques en cualquier parte del documento (para dispositivos móviles)
 document.addEventListener('touchstart', (e) => {
+    // Verificar si el toque no ocurrió en una imagen con la clase .lusido
     if (!e.target.classList.contains('lusido')) {
-        resetFilters();
+        resetFilters(); // Restablecer los filtros
     }
 });
+
+
+//funcion de barras de experiencia
+
+// Datos de habilidades (nombre y año de inicio)
+const skills = {
+    design: [
+        { name: "Graphics Design", startYear: 2017 },
+        { name: "2D Animation (After Effects)", startYear: 2017 },
+        { name: "3D Modeling (3DS Max, Mudbox, Blender)", startYear: 2017 },
+        { name: "UX/UI Design", startYear: 2019 },
+        { name: "Video Editing & Motion Graphics", startYear: 2018 },
+        { name: "Advertising Design (Banners, Social Media, Print)", startYear: 2018 },
+        { name: "Digital Marketing & Branding", startYear: 2018 },
+        { name: "Character Design (2D/3D)", startYear: 2017 },
+        { name: "Web Design", startYear: 2018 },
+        { name: "Texturing & Digital Sculpting", startYear: 2017 },
+        { name: "3D Animation (3DS Max, Maya, Blender)", startYear: 2018 },
+        { name: "Rigging & Skinning", startYear: 2019 }
+    ],
+    coding: [
+        { name: "Unity (C#)", startYear: 2018 },
+        { name: "Game Level Design", startYear: 2019 },
+        { name: "Game Mechanics Programming", startYear: 2019 },
+        { name: "Unreal Engine (Blueprints, C++)", startYear: 2021 },
+        { name: "Game Optimization & Performance", startYear: 2020 },
+        { name: "AI for Games", startYear: 2021 }
+    ],
+    tech: [
+        { name: "C#", startYear: 2018 },
+        { name: "C++", startYear: 2020 },
+        { name: "Interactive Prototyping", startYear: 2019 },
+        { name: "HTML/CSS", startYear: 2019 }
+    ],
+    sound: [
+        { name: "Music Composition & Production", startYear: 2015 },
+        { name: "Sound Design for Games", startYear: 2017 },
+        { name: "Digital Communication", startYear: 2018 },
+        { name: "UX Strategy", startYear: 2019 }
+    ]
+};
+
+// Función para calcular años de experiencia
+function calculateYears(startYear) {
+    const currentYear = new Date().getFullYear();
+    return currentYear - startYear;
+}
+
+// Función para encontrar el máximo global de años de experiencia
+function findGlobalMaxYears(skills) {
+    let maxYears = 0;
+    for (const category in skills) {
+        skills[category].forEach(skill => {
+            const years = calculateYears(skill.startYear);
+            if (years > maxYears) {
+                maxYears = years;
+            }
+        });
+    }
+    return maxYears;
+}
+
+// Función para crear una barra de progreso normalizada al 90%
+function createProgressBar(years, maxYears) {
+    const progressPercent = (years / maxYears) * 90; // Normalizado al 90%
+    return `
+        <div class="progress" style="width: ${progressPercent}%;"></div>
+    `;
+}
+
+// Función para renderizar habilidades
+function renderSkills(skillList, containerId, maxYears) {
+    const container = document.getElementById(containerId);
+    let html = "";
+    skillList.forEach(skill => {
+        const years = calculateYears(skill.startYear);
+        html += `
+            <div class="progress-detail">
+                <div class="progress-name">${skill.name}</div>
+                <div class="progress-percent">${years} años</div>
+            </div>
+            <div class="progress-bar">
+                ${createProgressBar(years, maxYears)}
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+}
+
+// Encontrar el máximo global de años de experiencia
+const globalMaxYears = findGlobalMaxYears(skills);
+
+// Renderizar todas las habilidades usando el máximo global
+renderSkills(skills.design, "design-skills", globalMaxYears);
+renderSkills(skills.coding, "coding-skills", globalMaxYears);
+renderSkills(skills.tech, "tech-skills", globalMaxYears);
+renderSkills(skills.sound, "sound-skills", globalMaxYears);
